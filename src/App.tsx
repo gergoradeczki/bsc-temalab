@@ -30,7 +30,8 @@ export default function App() {
             <MyAppBar title="Témalabor: TODO Alkalmazás" />
             <Grid container spacing={0} sx={{p: 2 }}
                   justifyContent="center">
-                <Main/>
+                <Main name="1."/>
+                <Main name="2."/>
             </Grid>
         </ThemeProvider>
     )

@@ -31,7 +31,7 @@ class Todo extends React.Component<TodoProps, TodoStates> {
 
     render() {
         return (
-            <Card sx={{ m: 2, maxWidth: 250 }} >
+            <Card sx={{ m: 2, maxWidth: 275 }} >
                 <CardContent>
                     <Typography variant="h5" component="div">{this.props.name}</Typography>
                     <Typography variant="caption">{this.props.deadline.toLocaleString()}</Typography>

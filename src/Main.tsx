@@ -1,8 +1,7 @@
 import React from "react";
-import {Grid, Paper} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import {NewTodo} from "./components/NewTodo";
 import {ITodo, TodoItems} from "./mock";
-import {Todo} from "./components/Todo";
 import {Todos} from "./components/Todos";
 
 interface MainStates {
@@ -81,7 +80,7 @@ export default class Main extends React.Component<any, MainStates> {
                 const newItemsList: Array<ITodo> = [] as ITodo[]
 
                 for(let i = 0; i < this.state.items.length; i++)
-                    if(this.state.items[i].position != position) {
+                    if(this.state.items[i].position !== position) {
                         if(this.state.items[i].position > position) this.state.items[i].position -= 1
                         newItemsList.push(this.state.items[i])
                     }
@@ -98,11 +97,10 @@ export default class Main extends React.Component<any, MainStates> {
         return (
             <>
                 <Grid item>
+                    <Typography align="center">{this.props.name}</Typography>
                     <NewTodo onClick={
                         (name: string, desc: string) => this.handleNewTodoItemClick(name, desc)
                     }/>
-                </Grid>
-                <Grid item>
                     <Todos items={this.state.items} onClick={(index: number, position: number) => this.handleTodoItemClick(index, position)}/>
                 </Grid>
             </>
