@@ -27,7 +27,7 @@ interface MyAppBarProp {
     title: string
 }
 
-export default function MyAppBar(props: MyAppBarProp) {
+export function Header(props: MyAppBarProp) {
     return (
         <>
             <HideOnScroll>

@@ -17,7 +17,7 @@ interface TodoProps {
     description: string
     deadline: Date
     state: TodoState
-    onClick: any
+    onClick: (index: number, position: number) => void
 }
 
 interface TodoStates {
@@ -53,4 +53,4 @@ class Todo extends React.Component<TodoProps, TodoStates> {
     }
 }
 
-export { Todo }
+export { Todo, TodoState }

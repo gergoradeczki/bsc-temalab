@@ -4,12 +4,12 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import {
     createTheme,
-    CssBaseline, Grid, ThemeProvider,
+    CssBaseline, ThemeProvider,
     useMediaQuery
 } from "@mui/material";
 import React from "react";
-import MyAppBar from "./components/MyAppBar";
-import Main from "./Main";
+import {Header} from "./components/Header";
+import {Board} from "./components/Board";
 
 export default function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -27,12 +27,8 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <MyAppBar title="Témalabor: TODO Alkalmazás" />
-            <Grid container spacing={0} sx={{p: 2 }}
-                  justifyContent="center">
-                <Main name="1."/>
-                <Main name="2."/>
-            </Grid>
+            <Header title="Témalabor: TODO Alkalmazás" />
+            <Board />
         </ThemeProvider>
     )
 }

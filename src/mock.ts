@@ -5,8 +5,14 @@ enum TodoState {
     PostponedState
 }
 
+export interface IBoard {
+    id: number
+    name: string
+}
+
 export interface ITodo {
     id: number
+    board_id: number
     position: number
     name: string
     deadline: Date

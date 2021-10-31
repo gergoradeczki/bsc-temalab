@@ -1,14 +1,19 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
-import {NewTodo} from "./components/NewTodo";
-import {ITodo, TodoItems} from "./mock";
-import {Todos} from "./components/Todos";
+import {NewTodo} from "./NewTodo";
+import {ITodo, TodoItems} from "../../../mock";
+import {Todos} from "./Todos";
+import {TodoState} from "./Todo";
 
-interface MainStates {
+interface ColumnProps {
+    name: string
+}
+
+interface ColumnStates {
     items: any
 }
 
-export default class Main extends React.Component<any, MainStates> {
+class Column extends React.Component<ColumnProps, ColumnStates> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -24,7 +29,7 @@ export default class Main extends React.Component<any, MainStates> {
         return max;
     }
 
-    handleNewTodoItemClick(name: string, description: string) {
+    handleNewTodoItemClick(name: string, description: string, deadline: Date, state: TodoState) {
         let id = this.findLargestIndex() + 1
         let position = this.state.items.length
         let date = new Date()
@@ -97,9 +102,9 @@ export default class Main extends React.Component<any, MainStates> {
         return (
             <>
                 <Grid item>
-                    <Typography align="center">{this.props.name}</Typography>
+                    <Typography align="center" variant={"h6"}>{this.props.name}</Typography>
                     <NewTodo onClick={
-                        (name: string, desc: string) => this.handleNewTodoItemClick(name, desc)
+                        (name: string, desc: string, deadline: Date, state: TodoState) => this.handleNewTodoItemClick(name, desc, deadline, state)
                     }/>
                     <Todos items={this.state.items} onClick={(index: number, position: number) => this.handleTodoItemClick(index, position)}/>
                 </Grid>
@@ -107,3 +112,5 @@ export default class Main extends React.Component<any, MainStates> {
         )
     }
 }
+
+export {Column}
