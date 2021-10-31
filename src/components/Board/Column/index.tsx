@@ -102,7 +102,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
         return (
             <>
                 <Grid item>
-                    <Typography align="center" variant={"h6"}>{this.props.name}</Typography>
+                    <Typography align="center" variant={"h6"} p={2}>{this.props.name}</Typography>
                     <NewTodo onClick={
                         (name: string, desc: string, deadline: Date, state: TodoState) => this.handleNewTodoItemClick(name, desc, deadline, state)
                     }/>
