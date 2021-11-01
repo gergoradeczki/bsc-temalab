@@ -20,3 +20,23 @@ export interface ITodo {
     state: TodoState
 }
 
+const TodoStateToLabel = [
+    {
+        value: TodoState.PendingState,
+        label: 'Függőben',
+    },
+    {
+        value: TodoState.ProgressState,
+        label: 'Folyamatban',
+    },
+    {
+        value: TodoState.DoneState,
+        label: 'Kész',
+    },
+    {
+        value: TodoState.PostponedState,
+        label: 'Elhalasztva',
+    },
+]
+
+export {TodoStateToLabel}

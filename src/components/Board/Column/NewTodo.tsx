@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
-import {TodoState} from "../../../types";
+import {TodoState, TodoStateToLabel} from "../../../types";
 
 interface NewTodoProps {
     onClick: (name: string, description: string, deadline: Date, state: TodoState) => void
@@ -24,25 +24,6 @@ interface NewTodoStates {
     deadline: Date
     state: TodoState
 }
-
-const states = [
-    {
-        value: TodoState.PendingState,
-        label: 'Függőben',
-    },
-    {
-        value: TodoState.ProgressState,
-        label: 'Folyamatban',
-    },
-    {
-        value: TodoState.DoneState,
-        label: 'Kész',
-    },
-    {
-        value: TodoState.PostponedState,
-        label: 'Elhalasztva',
-    },
-];
 
 class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
     constructor(props: NewTodoProps) {
@@ -126,7 +107,7 @@ class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
                                     value={this.state.state}
                                     onChange={(e) => this.setState({state: parseInt(e.target.value)})}
                                 >
-                                    {states.map((option) => (
+                                    {TodoStateToLabel.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
                                         {option.label}
                                     </MenuItem>

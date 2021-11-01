@@ -16,26 +16,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import React from "react";
-import {ITodo, TodoState} from "../../../types";
-
-const states = [
-    {
-        value: TodoState.PendingState,
-        label: 'Függőben',
-    },
-    {
-        value: TodoState.ProgressState,
-        label: 'Folyamatban',
-    },
-    {
-        value: TodoState.DoneState,
-        label: 'Kész',
-    },
-    {
-        value: TodoState.PostponedState,
-        label: 'Elhalasztva',
-    },
-];
+import {ITodo, TodoState, TodoStateToLabel} from "../../../types";
 
 interface TodoProps extends ITodo {
     onClick: (action: number, position: number, newData?: ITodo) => void
@@ -155,7 +136,7 @@ class Todo extends React.Component<TodoProps, TodoStates> {
                                 value={this.state.state}
                                 onChange={(e) => this.setState({state: parseInt(e.target.value)})}
                             >
-                                {states.map((option) => (
+                                {TodoStateToLabel.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
                                         {option.label}
                                     </MenuItem>
