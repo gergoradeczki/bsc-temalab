@@ -1,8 +1,9 @@
 import React from "react";
 import {Box, Button, Grid} from "@mui/material";
 import {Column} from "./Column";
-import {Columns, ITodo, TodoItemsForColumns} from "../../mock";
+import {Columns, TodoItemsForColumns} from "../../mock";
 import AddIcon from '@mui/icons-material/Add';
+import {ITodo} from "../../types";
 
 class Board extends React.Component<any, any> {
 

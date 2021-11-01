@@ -1,24 +1,4 @@
-enum TodoState {
-    PendingState,
-    ProgressState,
-    DoneState,
-    PostponedState
-}
-
-export interface IColumn {
-    id: number
-    name: string
-}
-
-export interface ITodo {
-    id: number
-    column_id: number
-    position: number
-    name: string
-    deadline: Date
-    description: string
-    state: TodoState
-};
+import {IColumn, ITodo, TodoState} from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let TodoItemsUnordered: Array<ITodo> = [
@@ -136,4 +116,4 @@ let TodoItemsEmpty: Array<ITodo> = [
 
 ] as ITodo[]
 
-export {Columns, TodoItemsForColumns, TodoState}
+export {Columns, TodoItemsForColumns}

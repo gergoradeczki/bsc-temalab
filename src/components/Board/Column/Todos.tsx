@@ -1,7 +1,7 @@
 import {Box, Paper} from "@mui/material";
 import React from "react";
 import {Todo} from "./Todo";
-import {ITodo} from "../../../mock";
+import {ITodo} from "../../../types";
 
 interface TodosProps {
     items: Array<ITodo>

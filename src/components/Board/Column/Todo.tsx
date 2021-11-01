@@ -16,7 +16,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import React from "react";
-import {ITodo, TodoState} from "../../../mock";
+import {ITodo, TodoState} from "../../../types";
 
 const states = [
     {

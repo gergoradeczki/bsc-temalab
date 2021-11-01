@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
-import {TodoState} from "./Todo";
+import {TodoState} from "../../../types";
 
 interface NewTodoProps {
     onClick: (name: string, description: string, deadline: Date, state: TodoState) => void

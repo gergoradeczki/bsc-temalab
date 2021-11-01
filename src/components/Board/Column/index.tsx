@@ -3,9 +3,9 @@ import {Grid, IconButton, Typography} from "@mui/material";
 import {NewTodo} from "./NewTodo";
 import {Todos} from "./Todos";
 import {TodoState} from "./Todo";
-import {ITodo} from "../../../mock";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ITodo } from "../../../types";
 
 interface ColumnProps {
     column_id: number
