@@ -19,8 +19,8 @@ interface NewTodoProps {
 
 interface NewTodoStates {
     isDialogOpen: boolean
-    name?: string
-    description?: string
+    name: string
+    description: string
     deadline: Date
     state: TodoState
 }
@@ -45,11 +45,11 @@ const states = [
 ];
 
 class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
-    constructor(props: any) {
+    constructor(props: NewTodoProps) {
         super(props)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleDialogOpen = this.handleDialogOpen.bind(this)
         this.handleDialogClose = this.handleDialogClose.bind(this)
-        this.handleDialogOK = this.handleDialogOK.bind(this)
+        this.handleDialogAddBtn = this.handleDialogAddBtn.bind(this)
         this.state = {
             isDialogOpen: false,
             name: "",
@@ -59,36 +59,35 @@ class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
         }
     }
 
-    handleDialogOK() {
-        console.log('Clicked OK!');
-        this.setState({
-            isDialogOpen: false
-        });
-    }
-
     handleDialogClose() {
         this.setState({
             isDialogOpen: false
         });
     }
 
-    handleChange(e: any) {
-        const target = e.target;
-        const value = target.checked;
+    handleDialogAddBtn() {
+        this.props.onClick(this.state.name, this.state.description, this.state.deadline, this.state.state)
+        this.handleDialogClose()
+    }
 
+    handleDialogOpen() {
         this.setState({
-            isDialogOpen: true
+            isDialogOpen: true,
+            name: "",
+            description: "",
+            deadline: new Date(),
+            state: TodoState.PendingState
         });
     }
 
     render() {
         return (
             <>
-                <Button variant="contained" endIcon={<AddIcon />} sx={{width: 275}} onClick={this.handleChange}>
-                    Új TODO
+                <Button variant="contained" endIcon={<AddIcon />} sx={{width: 275}} onClick={this.handleDialogOpen}>
+                    Új teendő
                 </Button>
                 <Dialog open={this.state.isDialogOpen} onClose={this.handleDialogClose}>
-                    <DialogTitle>Új TODO felvétele</DialogTitle>
+                    <DialogTitle>Új teendő felvétele</DialogTitle>
                     <DialogContent>
                         <Box component="form" sx={{'& > :not(style)': { m: 1, width: '25ch' },}}>
                             <Stack spacing={2}>
@@ -118,6 +117,7 @@ class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={(e) => this.setState({deadline: new Date(e.target.value)})}
                                 />
                                 <TextField
                                     id="todo-state"
@@ -136,8 +136,8 @@ class NewTodo extends React.Component<NewTodoProps, NewTodoStates> {
                         </Box>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDialogClose}>Cancel</Button>
-                        <Button onClick={this.handleDialogClose}>Subscribe</Button>
+                        <Button color="secondary" onClick={this.handleDialogClose}>Mégsem</Button>
+                        <Button color="primary" variant="contained" onClick={this.handleDialogAddBtn}>Hozzáadás</Button>
                     </DialogActions>
                 </Dialog>
             </>
