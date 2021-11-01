@@ -19,6 +19,9 @@ export default function App() {
             createTheme({
                 palette: {
                     mode: prefersDarkMode ? 'dark' : 'light',
+                    background: {
+                        default: prefersDarkMode ? '#13304f' : '#fff',
+                    }
                 },
             }),
         [prefersDarkMode],
