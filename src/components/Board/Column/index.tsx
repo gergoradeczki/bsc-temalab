@@ -3,7 +3,6 @@ import {Grid, IconButton, Typography} from "@mui/material";
 import {NewTodo} from "./NewTodo";
 import {Todos} from "./Todos";
 import {TodoState} from "./Todo";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ITodo } from "../../../types";
 
@@ -11,6 +10,7 @@ interface ColumnProps {
     column_id: number
     name: string
     items: Array<ITodo>
+    onClick: (index: number, action: number) => void
 }
 
 interface ColumnStates {
@@ -130,11 +130,8 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 <Grid item>
                     <Typography align="center" variant={"h6"} p={2}>
                         {this.props.name}
-                        <IconButton color="secondary">
-                            <EditIcon/>
-                        </IconButton>
-                        <IconButton color="secondary">
-                            <DeleteIcon/>
+                        <IconButton color="secondary" onClick={() => this.props.onClick(this.props.column_id, 1)}>
+                            <DeleteIcon />
                         </IconButton>
                     </Typography>
                     <NewTodo onClick={(name: string, desc: string, deadline: Date, state: TodoState) => this.handleNewTodoItemClick(name, desc, deadline, state)}/>
