@@ -57,7 +57,18 @@ namespace temalabor_2021_todo_backend.DAL
 
         public void Update(Todo todo)
         {
-            throw new NotImplementedException();
+            using (var db = createDbContext())
+            {
+                var toUpdate = db.Todos.SingleOrDefault(t => t.ID == todo.ID);
+                if(toUpdate != null)
+                {
+                    toUpdate.Position = todo.Position;
+                    toUpdate.Name = todo.Name;
+                    toUpdate.Deadline = todo.Deadline;
+                    toUpdate.Description = todo.Description;
+                    toUpdate.State = todo.State;
+                }
+            }
         }
 
         public void SwapPosition(Todo t1, Todo t2)
