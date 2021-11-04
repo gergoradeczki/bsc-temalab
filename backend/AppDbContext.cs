@@ -14,8 +14,12 @@ namespace temalabor_2021_todo_backend
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Column>().ToTable("Column");
             modelBuilder.Entity<Todo>().ToTable("Todo");
+
+            modelBuilder.Entity<Column>().HasMany(column => column.Todos).WithOne();
+            modelBuilder.Entity<Todo>().HasOne(todo => todo.Column).WithMany(column => column.Todos);
         }
     }
 }
