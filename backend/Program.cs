@@ -10,9 +10,8 @@ namespace temalabor_2021_todo_backend
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            CreateDbIfNotExists(host);
+            //var host = CreateHostBuilder(args).Build();
+            //CreateDbIfNotExists(host);
 
             var cr = new ColumnRepository(TestConn.SqlConnectionString);
 
@@ -22,7 +21,6 @@ namespace temalabor_2021_todo_backend
                 foreach(var t in c.Todos)
                     Console.WriteLine($"\ttID: {t.ID}, tName: {t.Name}, tDescription: {t.Description}");
             }
-                    
 
             //host.Run();
 
