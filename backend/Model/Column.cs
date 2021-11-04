@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace temalabor_2021_todo_backend.Model
+﻿namespace temalabor_2021_todo_backend.Model
 {
     public class Column
     {

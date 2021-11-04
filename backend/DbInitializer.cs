@@ -1,6 +1,4 @@
 ﻿using temalabor_2021_todo_backend.Model;
-using System;
-using System.Linq;
 
 namespace temalabor_2021_todo_backend
 {
