@@ -17,6 +17,6 @@
         public string? Description { get; set; }
         public TodoState State { get; set; }
         
-        public Column Column { get; set; }
+        public Column? Column { get; set; }
     }
 }

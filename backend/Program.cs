@@ -14,13 +14,21 @@ namespace temalabor_2021_todo_backend
             //CreateDbIfNotExists(host);
 
             var cr = new ColumnRepository(TestConn.SqlConnectionString);
+            var tr = new TodoRepository(TestConn.SqlConnectionString);
 
-            foreach(var c in cr.GetAll())
+            Console.WriteLine("Columns:");
+            foreach (var c in cr.GetAll())
             {
-                Console.WriteLine($"cID: {c.ID}, cName: {c.Name}");
-                foreach(var t in c.Todos)
-                    Console.WriteLine($"\ttID: {t.ID}, tName: {t.Name}, tDescription: {t.Description}");
+                Console.WriteLine($"\tID: {c.ID}, Name: {c.Name}");
+                if(c.Todos != null)
+                    foreach (var t in c.Todos)
+                        Console.WriteLine($"\t\tID: {t.ID}, ColumnID: {t.ColumnID}, Name: {t.Name}, Deadline: {t.Deadline}, Description: {t.Description}, State: {t.State}");
             }
+
+            Console.WriteLine("Todos:");
+            foreach(var t in tr.GetAll())
+                Console.WriteLine($"\tID: {t.ID}, ColumnID: {t.ColumnID}, Name: {t.Name}, Deadline: {t.Deadline}, Description: {t.Description}, State: {t.State}");
+
 
             //host.Run();
 

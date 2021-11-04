@@ -21,12 +21,21 @@ namespace temalabor_2021_todo_backend.DAL
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            using(var db = createDbContext())
+            {
+                var toDelete = db.Columns.Where(c => c.ID == id).SingleOrDefault();
+                if(toDelete != null)
+                    db.Columns.Remove(toDelete);
+                return db.SaveChanges() > 0;
+            }
         }
 
-        public Column FindById(int id)
+        public Column? FindById(int id)
         {
-            throw new NotImplementedException();
+            using (var db = createDbContext())
+            {
+                return db.Columns.SingleOrDefault(c => c.ID == id);
+            }
         }
 
         public ICollection<Column> GetAll()
@@ -39,7 +48,11 @@ namespace temalabor_2021_todo_backend.DAL
 
         public int Insert(Column column)
         {
-            throw new NotImplementedException();
+            using (var db = createDbContext())
+            {
+                db.Columns.Add(column);
+                return db.SaveChanges();
+            }
         }
     }
 }
