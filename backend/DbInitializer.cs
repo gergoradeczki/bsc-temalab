@@ -1,4 +1,4 @@
-﻿using temalabor_2021_todo_backend.Models;
+﻿using temalabor_2021_todo_backend.Model;
 using System;
 using System.Linq;
 

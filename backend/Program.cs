@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using temalabor_2021_todo_backend.Repository;
+using temalabor_2021_todo_backend.DAL;
 
 namespace temalabor_2021_todo_backend
 {

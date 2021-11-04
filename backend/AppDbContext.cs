@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021_todo_backend.Models;
+using temalabor_2021_todo_backend.Model;
 
 namespace temalabor_2021_todo_backend
 {
