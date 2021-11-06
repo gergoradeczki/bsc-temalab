@@ -1,27 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using temalabor_2021_todo_backend.DAL;
-using temalabor_2021_todo_backend.Data;
 using temalabor_2021_todo_backend.Models;
 
 namespace temalabor_2021_todo_backend.Controllers
 {
-
     [Route("api/columns")]
     public class ColumnController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly ColumnRepository _repo;
+        private readonly IColumnRepository repo;
 
-        public ColumnController(AppDbContext context)
+        public ColumnController(IColumnRepository repo)
         {
-            _context = context;
-            _repo = new ColumnRepository(_context);
+            this.repo = repo;
         }
 
         [HttpGet]
         public IEnumerable<ColumnDetailsDTO> GetColumns()
         {
-            return _repo.GetAll();
+            return repo.GetAll();
         }
     }
 }

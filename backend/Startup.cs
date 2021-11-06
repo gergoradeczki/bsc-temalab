@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using temalabor_2021_todo_backend.Data;
+using temalabor_2021_todo_backend.DAL;
 
 namespace temalabor_2021_todo_backend
 {
@@ -19,8 +20,11 @@ namespace temalabor_2021_todo_backend
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(TestConn.SqlConnectionString));
+            services.AddScoped<IColumnRepository, ColumnRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
+
+            services.AddDbContext<AppDbContext>
+                (options => options.UseSqlServer(TestConn.SqlConnectionString));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

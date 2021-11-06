@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using temalabor_2021_todo_backend.DAL;
-using temalabor_2021_todo_backend.Data;
 using temalabor_2021_todo_backend.Models;
 
 namespace temalabor_2021_todo_backend.Controllers
@@ -8,19 +7,17 @@ namespace temalabor_2021_todo_backend.Controllers
     [Route("api/todos")]
     public class TodoController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly TodoRepository _repo;
+        private readonly ITodoRepository repo;
 
-        public TodoController(AppDbContext context)
+        public TodoController(ITodoRepository repo)
         {
-            _context = context;
-            _repo = new TodoRepository(_context);
+            this.repo = repo;
         }
 
         [HttpGet]
         public IEnumerable<TodoDetailsDTO> GetAll()
         {
-            return _repo.GetAll();
+            return repo.GetAll();
         }
     }
 }
