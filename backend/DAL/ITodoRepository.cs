@@ -2,7 +2,7 @@
 
 namespace temalabor_2021_todo_backend.DAL
 {
-    internal interface ITodoRepository
+    public interface ITodoRepository
     {
         Todo? FindById(int id);
         ICollection<TodoDetailsDTO> GetAll();
