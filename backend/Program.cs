@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using temalabor_2021_todo_backend.DAL;
 
 namespace temalabor_2021_todo_backend
 {
@@ -10,31 +10,15 @@ namespace temalabor_2021_todo_backend
     {
         public static void Main(string[] args)
         {
-            //var host = CreateHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
+
             //CreateDbIfNotExists(host);
 
-            var cr = new ColumnRepository(TestConn.SqlConnectionString);
-            var tr = new TodoRepository(TestConn.SqlConnectionString);
-
-            Console.WriteLine("Columns:");
-            foreach (var c in cr.GetAll())
-            {
-                Console.WriteLine($"\tID: {c.ID}, Name: {c.Name}");
-                if(c.Todos != null)
-                    foreach (var t in c.Todos)
-                        Console.WriteLine($"\t\tID: {t.ID}, ColumnID: {t.ColumnID}, Name: {t.Name}, Deadline: {t.Deadline}, Description: {t.Description}, State: {t.State}");
-            }
-
-            Console.WriteLine("Todos:");
-            foreach(var t in tr.GetAll())
-                Console.WriteLine($"\tID: {t.ID}, ColumnID: {t.ColumnID}, Name: {t.Name}, Deadline: {t.Deadline}, Description: {t.Description}, State: {t.State}");
-
-
-            //host.Run();
+            host.Run();
 
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static void CreateDbIfNotExists(IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -52,11 +36,11 @@ namespace temalabor_2021_todo_backend
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
+                          .UseStartup<Startup>()
+                          .UseUrls("http://localhost:5000");
+        }
     }
 }

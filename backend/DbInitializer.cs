@@ -8,10 +8,9 @@ namespace temalabor_2021_todo_backend
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
             if (context.Columns.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
 
             var columns = new Column[]
@@ -22,10 +21,7 @@ namespace temalabor_2021_todo_backend
                 new Column {Name = "Negyedik oszlop"}
             };
 
-            foreach(Column column in columns)
-            {
-                context.Columns.Add(column);
-            }
+            context.Columns.AddRange(columns);
             context.SaveChanges();
 
             var todos = new Todo[]
@@ -36,11 +32,7 @@ namespace temalabor_2021_todo_backend
                 new Todo {ColumnID = 3, Position = 0, Name = "Demo 3", Deadline = DateTime.Parse("2020-11-20"), Description = "Column 3", State = TodoState.PendingState }
             };
 
-            foreach(Todo todo in todos)
-            {
-                context.Todos.Add(todo);
-            }
-
+            context.Todos.AddRange(todos);
             context.SaveChanges();
         }
     }
