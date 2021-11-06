@@ -13,7 +13,7 @@ namespace temalabor_2021_todo_backend
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            //CreateDbIfNotExists(host);
+            CreateDbIfNotExists(host);
 
             host.Run();
 
