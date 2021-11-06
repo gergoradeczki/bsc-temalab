@@ -30,20 +30,7 @@ namespace temalabor_2021_todo_backend.DAL
         {
             return db.Columns
                 .Include(c => c.Todos)
-                .Select(c => new ColumnDetailsDTO()
-                {
-                    ID = c.ID,
-                    Name = c.Name,
-                    Todos = c.Todos.Select(t => new TodoDTO() 
-                    {
-                        ID = t.ID,
-                        Position = t.Position,
-                        Name = t.Name,
-                        Deadline = t.Deadline,
-                        Description = t.Description,
-                        State = t.State
-                    })
-                })
+                .Select(c => GetColumnDetailsDTO(c))
                 .ToList();
         }
 
@@ -51,6 +38,25 @@ namespace temalabor_2021_todo_backend.DAL
         {
             db.Columns.Add(column);
             return db.SaveChanges();
+        }
+
+        public static ColumnDTO GetColumnDTO(Column column)
+        {
+            return new ColumnDTO()
+            {
+                ID = column.ID,
+                Name = column.Name
+            };
+        }
+
+        public static ColumnDetailsDTO GetColumnDetailsDTO(Column column)
+        {
+            return new ColumnDetailsDTO()
+            {
+                ID = column.ID,
+                Name = column.Name,
+                Todos = column.Todos.Select(t => TodoRepository.GetTodoDTO(t))
+            };
         }
     }
 }

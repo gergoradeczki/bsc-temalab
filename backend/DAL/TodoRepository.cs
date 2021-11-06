@@ -30,20 +30,7 @@ namespace temalabor_2021_todo_backend.DAL
         {
             return db.Todos
                 .Include(t => t.Column)
-                .Select(t => new TodoDetailsDTO()
-                {
-                    ID = t.ID,
-                    Position = t.Position,
-                    Name = t.Name,
-                    Deadline = t.Deadline,
-                    Description = t.Description,
-                    State = t.State,
-                    Column = new ColumnDTO()
-                    {
-                        ID = t.Column.ID,
-                        Name = t.Column.Name
-                    }
-                })
+                .Select(t => GetTodoDetailsDTO(t))
                 .ToList();
         }
 
@@ -83,6 +70,33 @@ namespace temalabor_2021_todo_backend.DAL
         public void MoveDown(Todo todo)
         {
             throw new NotImplementedException();
+        }
+
+        public static TodoDTO GetTodoDTO(Todo todo)
+        {
+            return new TodoDTO()
+            {
+                ID = todo.ID,
+                Position = todo.Position,
+                Name = todo.Name,
+                Deadline = todo.Deadline,
+                Description = todo.Description,
+                State = todo.State
+            };
+        }
+
+        public static TodoDetailsDTO GetTodoDetailsDTO(Todo todo)
+        {
+            return new TodoDetailsDTO()
+            {
+                ID = todo.ID,
+                Position = todo.Position,
+                Name = todo.Name,
+                Deadline = todo.Deadline,
+                Description = todo.Description,
+                State = todo.State,
+                Column = ColumnRepository.GetColumnDTO(todo.Column)
+            };
         }
     }
 }
