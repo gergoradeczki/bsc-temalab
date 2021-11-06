@@ -3,56 +3,53 @@ using temalabor_2021_todo_backend.Model;
 
 namespace temalabor_2021_todo_backend.DAL
 {
-    internal class ColumnRepository : IColumnRepository
+    public class ColumnRepository : IColumnRepository
     {
-        private readonly string connectionString;
+        private readonly AppDbContext db;
 
-        public ColumnRepository(string connectionString)
+        public ColumnRepository(AppDbContext db)
         {
-            this.connectionString = connectionString;
-        }
-
-        private AppDbContext createDbContext()
-        {
-            var contextOptionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            contextOptionsBuilder.UseSqlServer(connectionString);
-            return new AppDbContext(contextOptionsBuilder.Options);
+            this.db = db;
         }
 
         public bool Delete(int id)
         {
-            using(var db = createDbContext())
-            {
-                var toDelete = db.Columns.Where(c => c.ID == id).SingleOrDefault();
-                if(toDelete != null)
-                    db.Columns.Remove(toDelete);
-                return db.SaveChanges() > 0;
-            }
+            var toDelete = db.Columns.Where(c => c.ID == id).SingleOrDefault();
+            if(toDelete != null)
+                db.Columns.Remove(toDelete);
+            return db.SaveChanges() > 0;
         }
 
         public Column? FindById(int id)
         {
-            using (var db = createDbContext())
-            {
-                return db.Columns.SingleOrDefault(c => c.ID == id);
-            }
+            return db.Columns.SingleOrDefault(c => c.ID == id);
         }
 
-        public ICollection<Column> GetAll()
+        public ICollection<ColumnDetailsDTO> GetAll()
         {
-            using(var context = createDbContext())
-            {
-                return context.Columns.Include(c => c.Todos).ToList();
-            }
+            return db.Columns
+                .Include(c => c.Todos)
+                .Select(c => new ColumnDetailsDTO()
+                {
+                    ID = c.ID,
+                    Name = c.Name,
+                    Todos = c.Todos.Select(t => new TodoDTO() 
+                    {
+                        ID = t.ID,
+                        Position = t.Position,
+                        Name = t.Name,
+                        Deadline = t.Deadline,
+                        Description = t.Description,
+                        State = t.State
+                    })
+                })
+                .ToList();
         }
 
         public int Insert(Column column)
         {
-            using (var db = createDbContext())
-            {
-                db.Columns.Add(column);
-                return db.SaveChanges();
-            }
+            db.Columns.Add(column);
+            return db.SaveChanges();
         }
     }
 }

@@ -17,6 +17,28 @@
         public string? Description { get; set; }
         public TodoState State { get; set; }
         
-        public Column? Column { get; set; }
+        public Column Column { get; set; }
+    }
+
+    public class TodoDTO
+    {
+        public int ID { get; set; }
+        public int Position { get; set; }
+        public string? Name { get; set; }
+        public DateTime Deadline { get; set; }
+        public string? Description { get; set; }
+        public TodoState State { get; set; }
+    }
+
+    public class TodoDetailsDTO
+    {
+        public int ID { get; set; }
+        public int Position { get; set; }
+        public string? Name { get; set; }
+        public DateTime Deadline { get; set; }
+        public string? Description { get; set; }
+        public TodoState State { get; set; }
+
+        public ColumnDTO Column { get; set; }
     }
 }
