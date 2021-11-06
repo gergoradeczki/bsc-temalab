@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using temalabor_2021_todo_backend.DAL;
+using temalabor_2021_todo_backend.Data;
 using temalabor_2021_todo_backend.Model;
 
 namespace temalabor_2021_todo_backend.Controllers
