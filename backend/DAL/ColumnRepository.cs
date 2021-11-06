@@ -18,12 +18,13 @@ namespace temalabor_2021_todo_backend.DAL
             var toDelete = db.Columns.Where(c => c.ID == id).SingleOrDefault();
             if(toDelete != null)
                 db.Columns.Remove(toDelete);
+            // TODO: nem tudom miért, de Column törlésekor automatikusan törlődnek a hozzá tartozó Todo-k is.
             return db.SaveChanges() > 0;
         }
 
         public Column? FindById(int id)
         {
-            return db.Columns.SingleOrDefault(c => c.ID == id);
+            return db.Columns.Include(c => c.Todos).SingleOrDefault(c => c.ID == id);
         }
 
         public ICollection<ColumnDetailsDTO> GetAll()

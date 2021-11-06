@@ -15,9 +15,26 @@ namespace temalabor_2021_todo_backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ColumnDetailsDTO> GetColumns()
+        public IEnumerable<ColumnDetailsDTO> GetAll()
         {
             return repo.GetAll();
+        }
+
+        [HttpGet]
+        [Route("{id}")] // Path: api/columns/{id}
+        public IActionResult GetOne(int id)
+        {
+            var res = repo.FindById(id);
+            if (res == null)
+                return NotFound();
+            return Ok(ColumnRepository.GetColumnDetailsDTO(res));
+        }
+
+        [HttpDelete]
+        [Route("{id}")] // Path: api/columns/{id}
+        public IActionResult Delete(int id)
+        {
+            return repo.Delete(id) ? NoContent() : NotFound();
         }
     }
 }
