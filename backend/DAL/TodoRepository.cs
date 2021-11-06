@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using temalabor_2021_todo_backend.Data;
-using temalabor_2021_todo_backend.Model;
+using temalabor_2021_todo_backend.Models;
 
 namespace temalabor_2021_todo_backend.DAL
 {

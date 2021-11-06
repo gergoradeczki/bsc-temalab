@@ -1,4 +1,4 @@
-﻿namespace temalabor_2021_todo_backend.Model
+﻿namespace temalabor_2021_todo_backend.Models
 {
     public enum TodoState
     {
