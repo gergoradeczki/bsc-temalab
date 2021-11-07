@@ -25,7 +25,7 @@ namespace temalabor_2021
             services.AddScoped<ITodoRepository, TodoRepository>();
 
             services.AddDbContext<AppDbContext>
-                (options => options.UseSqlServer(TestConn.SqlConnectionString));
+                (options => options.UseSqlite($"Data Source=temalabor.db"));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
