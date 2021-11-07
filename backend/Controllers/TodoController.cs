@@ -57,9 +57,9 @@ namespace temalabor_2021.Controllers
 
             if(t1 != null && t2 != null)
             {
-                return repo.SwapPosition(t1, t2) > 0 ? Ok() : NoContent();
+                return repo.SwapPosition(t1, t2) > 0 ? Ok() : Conflict();
             }
-            return NoContent();
+            return Conflict();
         }
 
         public class SwapClass
