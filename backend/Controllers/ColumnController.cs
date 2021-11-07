@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using temalabor_2021_todo_backend.DAL;
 using temalabor_2021_todo_backend.Models;
 
 namespace temalabor_2021_todo_backend.Controllers
 {
+    [EnableCors("policy")]
     [Route("api/columns")]
     public class ColumnController : Controller
     {
@@ -20,8 +22,13 @@ namespace temalabor_2021_todo_backend.Controllers
             return repo.GetAll();
         }
 
-        [HttpGet]
-        [Route("{id}")] // Path: api/columns/{id}
+        [HttpPost]
+        public IActionResult Create([FromBody] Column column)
+        {
+            return repo.Insert(column) > 0 ? Created("/api/columns/" + column.ID, column) : Forbid();
+        }
+
+        [HttpGet("{id}")] // Path: api/columns/{id}
         public IActionResult GetOne(int id)
         {
             var res = repo.FindById(id);
@@ -30,8 +37,7 @@ namespace temalabor_2021_todo_backend.Controllers
             return Ok(ColumnRepository.GetColumnDetailsDTO(res));
         }
 
-        [HttpDelete]
-        [Route("{id}")] // Path: api/columns/{id}
+        [HttpDelete("{id}")] // Path: api/columns/{id}
         public IActionResult Delete(int id)
         {
             return repo.Delete(id) ? NoContent() : NotFound();

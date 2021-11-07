@@ -9,7 +9,7 @@ namespace temalabor_2021_todo_backend.DAL
         int Update(Todo todo);
         int Insert(Todo todo);
         bool Delete(int id);
-        void SwapPosition(Todo t1, Todo t2);
+        int SwapPosition(Todo t1, Todo t2);
         void MoveUp(Todo todo);
         void MoveDown(Todo todo);
     }

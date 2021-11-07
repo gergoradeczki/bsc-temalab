@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using temalabor_2021_todo_backend.Data;
 using temalabor_2021_todo_backend.Models;
 
@@ -33,7 +32,7 @@ namespace temalabor_2021_todo_backend.DAL
 
         public Todo? FindById(int id)
         {
-            return db.Todos.Include(t => t.Column).FirstOrDefault(t => t.ID == id);
+            return db.Todos.Include(t => t.Column).SingleOrDefault(t => t.ID == id);
         }
 
         public ICollection<TodoDetailsDTO> GetAll()
@@ -46,22 +45,19 @@ namespace temalabor_2021_todo_backend.DAL
 
         public int Insert(Todo todo)
         {
-            var p1Todo = db.Todos.FirstOrDefault(t => t.ID == todo.ID);
-            var p2Todo = db.Todos.FirstOrDefault(t => t.Position == todo.Position && t.ColumnID == todo.ColumnID);
-            var pColumn = db.Columns.FirstOrDefault(c => c.ID == todo.ColumnID);
-
-            if (p1Todo == null && p2Todo == null && pColumn != null)
+            if(db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Any())
             {
-                try
-                {
-                    db.Todos.Add(todo);
-                    return db.SaveChanges();
-                } catch (Exception ex)
-                {
-                    return 0;
-                }
+                int maxPos = db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Max();
+                todo.Position = maxPos + 1;
+            } else
+            {
+                todo.Position = 0;
             }
-            return 0;
+            
+
+            db.Todos.Add(todo);
+            return db.SaveChanges();
+
         }
 
         public int Update(Todo todo)
@@ -79,13 +75,13 @@ namespace temalabor_2021_todo_backend.DAL
             return db.SaveChanges();
         }
 
-        public void SwapPosition(Todo t1, Todo t2)
+        public int SwapPosition(Todo t1, Todo t2)
         {
             int tempPos = t1.Position;
             t1.Position = t2.Position;
             t2.Position = tempPos;
 
-            db.SaveChanges();
+            return db.SaveChanges();
         }
 
         public void MoveUp(Todo todo)
