@@ -34,9 +34,6 @@ export function Header(props: MyAppBarProp) {
             <HideOnScroll>
                 <AppBar position="fixed">
                     <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            {props.title}
-                        </Typography>
                         <Link
                             href="https://github.com/gergoradeczki/temalabor-2021"
                             target="_blank"
@@ -45,7 +42,9 @@ export function Header(props: MyAppBarProp) {
                                 <GitHubIcon/>
                             </IconButton>
                         </Link>
-
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            {props.title}
+                        </Typography>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>

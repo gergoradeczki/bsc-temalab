@@ -30,7 +30,7 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Header title="Témalabor: TODO Alkalmazás" />
+            <Header title="Todo Alkalmazás" />
             <Board />
         </ThemeProvider>
     )
