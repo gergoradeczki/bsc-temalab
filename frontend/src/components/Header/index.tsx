@@ -1,4 +1,5 @@
-import {AppBar, Slide, styled, Toolbar, Typography, useScrollTrigger} from "@mui/material";
+import {AppBar, IconButton, Link, Slide, styled, Toolbar, Typography, useScrollTrigger} from "@mui/material";
+import GitHubIcon from '@mui/icons-material/GitHub';
 import React from "react";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -36,6 +37,15 @@ export function Header(props: MyAppBarProp) {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             {props.title}
                         </Typography>
+                        <Link
+                            href="https://github.com/gergoradeczki/temalabor-2021"
+                            target="_blank"
+                            rel="noreferrer">
+                            <IconButton>
+                                <GitHubIcon/>
+                            </IconButton>
+                        </Link>
+
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>

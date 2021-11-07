@@ -17,7 +17,7 @@ class Todos extends React.Component<TodosProps, any> {
     render() {
         return (
             <Box>
-                {this.props.items.map((e, index) => (
+                {this.props.items.map((e) => (
                     <Todo
                         key={e.id}
                         id={e.id}

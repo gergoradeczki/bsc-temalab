@@ -148,16 +148,16 @@ class Todo extends React.Component<TodoProps, TodoStates> {
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
                     {!this.state.edit &&
                         <>
-                            <IconButton color="primary" onClick={() => this.setState({edit: true})}>
+                            <IconButton sx={{color: this.getStateColor(this.state.state)}} onClick={() => this.setState({edit: true})}>
                                 <EditIcon/>
                             </IconButton>
-                            <IconButton color="primary" onClick={() => this.props.onClick(0, this.props.position)}>
+                            <IconButton sx={{color: this.getStateColor(this.state.state)}} onClick={() => this.props.onClick(0, this.props.position)}>
                                 <ArrowUpwardIcon/>
                             </IconButton>
-                            <IconButton color="primary" onClick={() => this.props.onClick(1, this.props.position)}>
+                            <IconButton sx={{color: this.getStateColor(this.state.state)}} onClick={() => this.props.onClick(1, this.props.position)}>
                                 <ArrowDownwardIcon/>
                             </IconButton>
-                            <IconButton color="primary" onClick={() => this.props.onClick(2, this.props.position)}>
+                            <IconButton sx={{color: this.getStateColor(this.state.state)}} onClick={() => this.props.onClick(2, this.props.position)}>
                                 <DeleteIcon/>
                             </IconButton>
                         </>

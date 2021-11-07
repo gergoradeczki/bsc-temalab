@@ -177,7 +177,7 @@ class Board extends React.Component<any, BoardStates> {
     render() {
         return (
             <Grid container spacing={2} p={2} justifyContent="center">
-                {this.state.columns.map((e: IColumn, index: number) => (
+                {this.state.columns.map((e: IColumn) => (
                     <Column
                         column_id={e.id}
                         name={e.name}
