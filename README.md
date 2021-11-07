@@ -76,12 +76,12 @@ A forráskód teljes mértékben, az elejétől kezdődően TypeScript-ben kész
 Az alábbi hierarchia szerint épül fel a frontend:
 
 - App
-  - Header
-  - Board
-    - Column
-      - NewTodo
-      - Todos
-        - Todo
+    - Header
+    - Board
+      - Column
+        - NewTodo
+        - Todos
+          - Todo
 
 **App**
 
@@ -139,15 +139,57 @@ Adatbázis ER diagram:
 
 #### API interfész
 
-A backend API interfészt biztosít kontrollereken keresztül a frontend számára. Külön címen lehet a teendőket, külön címen az oszlopokat elérni.
+A backend API interfészt biztosít kontrollereken keresztül a frontend számára. Külön címen lehet a teendőket, külön címen az oszlopokat elérni. Az `:5000` porton fog futni a szerver.
 
 Oszlopokhoz:
 
-- `/api/columns`: GET, POST, OPTIONS
-- `/api/columns/{id}`: GET, DELETE, OPTIONS
+- `/api/columns`
+    - GET:
+        - 200: Vissza adja az összes oszlopot, beleágyazva a hozzájuk tartozó teendőket is
+    - POST:
+        - 201: A kapott névvel létre lett hozva az oszlop, vissza adja az id-val együtt
+        - 403: Nem sikerült az oszlop létrehozása
+- `/api/columns/{id}`
+    - GET
+        - 200: Megadott id alapján vissza adja a kért oszlopot, beágyzava a hozzá tartozó teendőkkel együtt.
+        - 404: Nincs ilyen id-jú oszlop
+    - DELETE
+        - 204: A kért id-jú oszlop törlésre került. A hozzá tartozó teendők is.
+        - 404: Nincs ilyen id-jú oszlop
 
 Teendőkhöz:
 
-- `/api/todos`: GET, POST, PUT, OPTIONS
-- `/api/todos/{id}`: GET, DELETE, OPTIONS
-- `/api/todos/swap`: PUT, OPTIONS
+- `/api/todos`
+    - GET
+        - 200: Vissza adja az összes teendőt, bele lesz ágyazva a hozzájuk tartozó oszlop
+    - POST
+        - 201: A kapott teendő létre lett hozva, vissza adja az id-ját és pozícióját
+        - 403: Nem sikerült a teendő létrehozása
+    - PUT
+        - 200: Az kapott teendő adataival felül lett írva az adatbázisban lévő változat adatai.
+        - 404: Nincs ilyen id-jú teendő
+- `/api/todos/{id}`
+    - GET
+        - 200: A kért id-jú teendőt vissza adja. Bele lesz ágyazva a hozzá tartozó oszlop
+        - 404: Nincs ilyen id-jú teendő
+    - DELETE
+        - 204: A kért id-jú teendő törlésre került
+        - 404: Nincs ilyen id-jú teendő
+- `/api/todos/swap`
+    - PUT
+        - 200: A kapott két darab id-jú teendők pozícióját megcserélte
+        - 409: Nem sikerült a csere
+
+#### DTO-k
+
+API hívás esetén include-olva van oszlopokhoz a teendőik vagy teendőkhöz az oszlop. Ez a repository szinten még nem volt gond, de API-n kiküldéskor végtelen include-hoz vezetett. Ennek megoldásaként a két entitáshoz csináltam egy DTO és DetailsDTO változatot.
+
+A DTO változat nem tartalamzza a tartalamzott másik entitást.
+
+A DetailsDTO tartalmazza a másik entitást, de úgy, hogy abban már nincsen benne az általa tartalmazott másik entitás(ok).
+
+Ezzel a két plusz osztállyal megszűnik a végtelen include-olás.
+
+#### CORS
+
+A program a `localhost:3000` címről érkező bármilyen kérést fogadja.
