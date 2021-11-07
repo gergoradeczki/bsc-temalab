@@ -9,8 +9,8 @@ namespace temalabor_2021.Data
         {
         }
         
-        public DbSet<Column> Columns { get; set; }
-        public DbSet<Todo> Todos { get; set; }
+        public DbSet<Column> Columns => Set<Column>();
+        public DbSet<Todo> Todos => Set<Todo>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

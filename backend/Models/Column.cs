@@ -5,7 +5,7 @@
         public int ID { get; set; }
         public string? Name { get; set; }
 
-        public ICollection<Todo>? Todos { get; set; }
+        public virtual ICollection<Todo>? Todos { get; set; }
     }
 
     public class ColumnDTO

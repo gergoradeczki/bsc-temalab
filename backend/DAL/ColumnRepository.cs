@@ -18,7 +18,6 @@ namespace temalabor_2021.DAL
             var toDelete = db.Columns.Where(c => c.ID == id).SingleOrDefault();
             if(toDelete != null)
                 db.Columns.Remove(toDelete);
-            // TODO: nem tudom miért, de Column törlésekor automatikusan törlődnek a hozzá tartozó Todo-k is.
             return db.SaveChanges() > 0;
         }
 
@@ -56,7 +55,7 @@ namespace temalabor_2021.DAL
             {
                 ID = column.ID,
                 Name = column.Name,
-                Todos = column.Todos.Select(t => TodoRepository.GetTodoDTO(t))
+                Todos = column.Todos?.Select(t => TodoRepository.GetTodoDTO(t))
             };
         }
     }

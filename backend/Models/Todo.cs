@@ -1,4 +1,6 @@
-﻿namespace temalabor_2021.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace temalabor_2021.Models
 {
     public enum TodoState
     {
@@ -10,14 +12,14 @@
     public class Todo
     {
         public int ID { get; set; }
-        public int ColumnID { get; set; }
+        public int? ColumnID { get; set; }
         public int Position { get; set; }
         public string? Name { get; set; }
         public DateTime Deadline { get; set; }
         public string? Description { get; set; }
         public TodoState State { get; set; }
-        
-        public Column Column { get; set; }
+
+        public virtual Column Column { get; set; } = null!;
     }
 
     public class TodoDTO
@@ -39,6 +41,6 @@
         public string? Description { get; set; }
         public TodoState State { get; set; }
 
-        public ColumnDTO Column { get; set; }
+        public ColumnDTO Column { get; set; } = null!;
     }
 }
