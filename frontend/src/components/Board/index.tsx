@@ -11,7 +11,6 @@ import {
     TextField
 } from "@mui/material";
 import {Column} from "./Column";
-import {Columns, TodoItemsForColumns} from "../../mock";
 import AddIcon from '@mui/icons-material/Add';
 import {IColumn, ITodo} from "../../types";
 
@@ -20,6 +19,7 @@ interface BoardStates {
     todos: Array<ITodo>
     cName: string
     isDialogOpen: boolean
+    fetch: boolean
 }
 
 class Board extends React.Component<any, BoardStates> {
@@ -30,10 +30,11 @@ class Board extends React.Component<any, BoardStates> {
         this.handleDialogClose = this.handleDialogClose.bind(this)
         this.handleDialogAddBtn = this.handleDialogAddBtn.bind(this)
         this.state = {
-            columns: Columns,
-            todos: TodoItemsForColumns,
+            columns: [],
+            todos: [],
             cName: "",
-            isDialogOpen: false
+            isDialogOpen: false,
+            fetch: false
         }
     }
 
@@ -69,17 +70,31 @@ class Board extends React.Component<any, BoardStates> {
     }
 
     handleDialogAddBtn() {
-        let newColumnList = new Array<IColumn>()
-        for(let column of this.state.columns)
-            newColumnList.push(column)
-
-        newColumnList.push({id: this.findLargestIndex() + 1, name: this.state.cName})
-
-        // TODO: API hívás ide
-
-        this.setState({
-            columns: newColumnList
+        fetch("http://localhost:5000/api/columns", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: this.state.cName
+            })
         })
+            .then(response => response.json())
+            .then(data => {
+                let newColumnList = new Array<IColumn>()
+                for(let column of this.state.columns)
+                    newColumnList.push(column)
+                newColumnList.push({id: data.id, name: data.name})
+
+                this.setState({
+                    columns: newColumnList
+                })
+            })
+            .catch(err => {
+                console.log("Error while adding new column: " + err)
+            })
+
         this.handleDialogClose()
     }
 
@@ -89,26 +104,74 @@ class Board extends React.Component<any, BoardStates> {
                 break
             case 1:
             {
-                let newColumnList = new Array<IColumn>()
-                for(let column of this.state.columns)
-                    if(column.id !== index)
-                        newColumnList.push(column)
-
-                let newTodoList = new Array<ITodo>()
-                for(let todo of this.state.todos)
-                    if(todo.column_id !== index)
-                        newTodoList.push(todo)
-                
-                // TODO: API hívás ide
-
-                this.setState({
-                    columns: newColumnList,
-                    todos: newTodoList
+                fetch("http://localhost:5000/api/columns/" + index, {
+                    method: "DELETE"
                 })
+                    .then(() => {
+                        let newColumnList = new Array<IColumn>()
+                        for(let column of this.state.columns)
+                            if(column.id !== index)
+                                newColumnList.push(column)
+
+                        let newTodoList = new Array<ITodo>()
+                        for(let todo of this.state.todos)
+                            if(todo.column_id !== index)
+                                newTodoList.push(todo)
+
+                        this.setState({
+                            columns: newColumnList,
+                            todos: newTodoList
+                        })
+                    })
+                    .catch(err => {
+                        console.log("Couldn't delete column with index=" + index + ": " + err)
+                    })
 
                 break
             }
         }
+    }
+
+    componentDidMount() {
+        if(!this.state.fetch) {
+            fetch('http://localhost:5000/api/columns/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    let columns = new Array<IColumn>()
+                    let todos = new Array<ITodo>()
+
+                    for(let item of data) {
+                        let column: IColumn = {
+                            id: item.id,
+                            name: item.name
+                        }
+                        columns.push(column)
+                        for(let subitem of item.todos) {
+                            let todo: ITodo = {
+                                id: subitem.id,
+                                column_id: column.id,
+                                position: subitem.position,
+                                name: subitem.name,
+                                deadline: new Date(subitem.deadline),
+                                description: subitem.description,
+                                state: subitem.state
+                            }
+                            todos.push(todo)
+                        }
+                    }
+
+                    this.setState({
+                        columns: columns,
+                        todos: todos,
+                        fetch: true
+                    })
+                })
+                .catch(err => {
+                    console.log("Server unavailable: " + err)
+                })
+        }
+
     }
 
     render() {

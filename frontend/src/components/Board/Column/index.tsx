@@ -27,21 +27,17 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
         }
     }
 
-    findLargestIndex() : number {
-        let max = 0
-        for(let i = 0; i < this.state.items.length; i++) {
-            max = (this.state.items[i].id > max) ? this.state.items[i].id : max
-        }
-        return max;
-    }
-
     handleNewTodoItemClick(name: string, description: string, deadline: Date, state: TodoState) {
-        let id = this.findLargestIndex() + 1
         let position = this.state.items.length
-        this.setState({
-            items: this.state.items.concat({
-                id: id,
-                column_id: this.props.column_id,
+
+        fetch("http://localhost:5000/api/todos", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                columnid: this.props.column_id,
                 position: position,
                 name: name,
                 deadline: deadline,
@@ -49,6 +45,23 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 state: state
             })
         })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    items: this.state.items.concat({
+                        id: data.id,
+                        column_id: this.props.column_id,
+                        position: position,
+                        name: name,
+                        deadline: deadline,
+                        description: description,
+                        state: state
+                    })
+                })
+            })
+            .catch(err => {
+                console.log("Error while adding new Todo item: " + err)
+            })
     }
 
     handleTodoItemClick(action: number, position: number, newData?: ITodo) {
@@ -57,68 +70,118 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
         switch (action) {
             case 0: /* Moving Up */
                 if(this.state.items[position].position > 0) {
-                    const newItemsList: Array<ITodo> = [] as ITodo[]
-
-                    for(let i = 0; i < this.state.items.length; i++)
-                        newItemsList.push(this.state.items[i])
-
-                    newItemsList[position].position -= 1
-                    newItemsList[position - 1].position += 1
-                    newItemsList.sort((a: ITodo, b: ITodo) => (a.position > b.position) ? 1 : (b.position > a.position) ? -1 : 0)
-
-                    this.setState({
-                        items: newItemsList
+                    fetch("http://localhost:5000/api/todos/swap", {
+                        method: "PUT",
+                        headers: {
+                            'Content-type': 'application/json; charset=UTF-8'
+                        },
+                        body: JSON.stringify({
+                            a: this.state.items[position].id,
+                            b: this.state.items[position-1].id
+                        })
                     })
+                        .then(() => {
+                            const newItemsList: Array<ITodo> = [] as ITodo[]
+
+                            for(let i = 0; i < this.state.items.length; i++)
+                                newItemsList.push(this.state.items[i])
+
+                            newItemsList[position].position -= 1
+                            newItemsList[position - 1].position += 1
+                            newItemsList.sort((a: ITodo, b: ITodo) => (a.position > b.position) ? 1 : (b.position > a.position) ? -1 : 0)
+
+                            this.setState({
+                                items: newItemsList
+                            })
+                        })
+                        .catch(err => {
+                            console.log("Error when moving up Todo item: " + err)
+                        })
                 }
-                /* TODO: API hívás ide */
                 break
             case 1: /* Moving Down */
                 if(this.state.items[position].position < this.state.items.length - 1) {
-                    const newItemsList: Array<ITodo> = [] as ITodo[]
-
-                    for(let i = 0; i < this.state.items.length; i++)
-                        newItemsList.push(this.state.items[i])
-
-                    newItemsList[position].position += 1
-                    newItemsList[position + 1].position -= 1
-                    newItemsList.sort((a: ITodo, b: ITodo) => (a.position > b.position) ? 1 : (b.position > a.position) ? -1 : 0)
-
-                    this.setState({
-                        items: newItemsList
+                    fetch("http://localhost:5000/api/todos/swap", {
+                        method: "PUT",
+                        headers: {
+                            'Content-type': 'application/json; charset=UTF-8'
+                        },
+                        body: JSON.stringify({
+                            a: this.state.items[position].id,
+                            b: this.state.items[position+1].id
+                        })
                     })
+                        .then(() => {
+                            const newItemsList: Array<ITodo> = [] as ITodo[]
+
+                            for(let i = 0; i < this.state.items.length; i++)
+                                newItemsList.push(this.state.items[i])
+
+                            newItemsList[position].position += 1
+                            newItemsList[position + 1].position -= 1
+                            newItemsList.sort((a: ITodo, b: ITodo) => (a.position > b.position) ? 1 : (b.position > a.position) ? -1 : 0)
+
+                            this.setState({
+                                items: newItemsList
+                            })
+                        })
+                        .catch(err => {
+                            console.log("Error when moving down Todo item: " + err)
+                        })
                 }
-                /* TODO: API hívás ide */
                 break
             case 2: /* Deleting Item */
-                {
-                    const newItemsList: Array<ITodo> = new Array<ITodo>()
+                fetch("http://localhost:5000/api/todos/" + this.state.items[position].id, {
+                    method: "DELETE"
+                })
+                    .then(() => {
+                        const newItemsList: Array<ITodo> = new Array<ITodo>()
 
-                    for (let i = 0; i < this.state.items.length; i++)
-                        if (this.state.items[i].position !== position) {
-                            newItemsList.push(this.state.items[i])
-                            if (this.state.items[i].position > position) newItemsList[newItemsList.length - 1].position -= 1
-                        }
+                        for (let i = 0; i < this.state.items.length; i++)
+                            if (this.state.items[i].position !== position) {
+                                newItemsList.push(this.state.items[i])
+                                if (this.state.items[i].position > position) newItemsList[newItemsList.length - 1].position -= 1
+                            }
 
-                    this.setState({
-                        items: newItemsList
-                    })
-                    /* TODO: API hívás ide */
-                }
-                break
-            case 3: /* Saving Changed Item */
-                {
-                    const newItemsList: Array<ITodo> = new Array<ITodo>()
-
-                    for (let i = 0; i < this.state.items.length; i++)
-                        newItemsList.push(this.state.items[i])
-
-                    if(newData !== undefined) {
-                        newItemsList[newData?.position] = newData
                         this.setState({
                             items: newItemsList
                         })
-                    }
-                    /* TODO: API hívás ide */
+                    })
+                    .catch(err => {
+                        console.log("Error while deleting Todo item: " + err)
+                    })
+                break
+            case 3: /* Saving Changed Item */
+                if(newData !== undefined) {
+                    fetch("http://localhost:5000/api/todos", {
+                        method: "PUT",
+                        headers: {
+                            'Content-type': 'application/json; charset=UTF-8'
+                        },
+                        body: JSON.stringify({
+                            id: newData.id,
+                            columnid: newData.column_id,
+                            position: newData.position,
+                            name: newData.name,
+                            description: newData.description,
+                            deadline: newData.deadline,
+                            state: newData.state
+                        })
+                    })
+                        .then(() => {
+                            const newItemsList: Array<ITodo> = new Array<ITodo>()
+
+                            for (let i = 0; i < this.state.items.length; i++)
+                                newItemsList.push(this.state.items[i])
+
+                            newItemsList[newData?.position] = newData
+                            this.setState({
+                                items: newItemsList
+                            })
+                        })
+                        .catch(err => {
+                            console.log("Error while saving Todo item changes: " + err)
+                        })
                 }
                 break
         }

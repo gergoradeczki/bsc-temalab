@@ -70,7 +70,6 @@ class Todo extends React.Component<TodoProps, TodoStates> {
             state: this.state.state
         }
         this.props.onClick(3, this.props.position, newData)
-        /* TODO megvalósítani */
         this.setState({edit: false})
     }
 
