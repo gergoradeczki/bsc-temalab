@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {Column} from "./Column";
 import AddIcon from '@mui/icons-material/Add';
-import {IColumn, ITodo} from "../../types";
+import {IColumn, ITodo, host} from "../../types";
 
 interface BoardStates {
     columns: Array<IColumn>
@@ -70,7 +70,7 @@ class Board extends React.Component<any, BoardStates> {
     }
 
     handleDialogAddBtn() {
-        fetch("http://localhost:5000/api/columns", {
+        fetch(host + ":5000/api/columns", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -104,7 +104,7 @@ class Board extends React.Component<any, BoardStates> {
                 break
             case 1:
             {
-                fetch("http://localhost:5000/api/columns/" + index, {
+                fetch(host + ":5000/api/columns/" + index, {
                     method: "DELETE"
                 })
                     .then(() => {
@@ -134,7 +134,7 @@ class Board extends React.Component<any, BoardStates> {
 
     componentDidMount() {
         if(!this.state.fetch) {
-            fetch('http://localhost:5000/api/columns/')
+            fetch(host + ":5000/api/columns/")
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

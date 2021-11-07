@@ -4,7 +4,7 @@ import {NewTodo} from "./NewTodo";
 import {Todos} from "./Todos";
 import {TodoState} from "./Todo";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ITodo } from "../../../types";
+import {host, ITodo} from "../../../types";
 
 interface ColumnProps {
     column_id: number
@@ -30,7 +30,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
     handleNewTodoItemClick(name: string, description: string, deadline: Date, state: TodoState) {
         let position = this.state.items.length
 
-        fetch("http://localhost:5000/api/todos", {
+        fetch(host + ":5000/api/todos", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +70,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
         switch (action) {
             case 0: /* Moving Up */
                 if(this.state.items[position].position > 0) {
-                    fetch("http://localhost:5000/api/todos/swap", {
+                    fetch(host + ":5000/api/todos/swap", {
                         method: "PUT",
                         headers: {
                             'Content-type': 'application/json; charset=UTF-8'
@@ -101,7 +101,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 break
             case 1: /* Moving Down */
                 if(this.state.items[position].position < this.state.items.length - 1) {
-                    fetch("http://localhost:5000/api/todos/swap", {
+                    fetch(host + ":5000/api/todos/swap", {
                         method: "PUT",
                         headers: {
                             'Content-type': 'application/json; charset=UTF-8'
@@ -131,7 +131,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 }
                 break
             case 2: /* Deleting Item */
-                fetch("http://localhost:5000/api/todos/" + this.state.items[position].id, {
+                fetch(host + ":5000/api/todos/" + this.state.items[position].id, {
                     method: "DELETE"
                 })
                     .then(() => {
@@ -153,7 +153,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 break
             case 3: /* Saving Changed Item */
                 if(newData !== undefined) {
-                    fetch("http://localhost:5000/api/todos", {
+                    fetch(host + ":5000/api/todos", {
                         method: "PUT",
                         headers: {
                             'Content-type': 'application/json; charset=UTF-8'

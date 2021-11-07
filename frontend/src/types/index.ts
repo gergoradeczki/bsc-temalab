@@ -20,6 +20,8 @@ export interface ITodo {
     state: TodoState
 }
 
+const host: String = "http://" + window.location.hostname
+
 const TodoStateToLabel = [
     {
         value: TodoState.PendingState,
@@ -39,4 +41,4 @@ const TodoStateToLabel = [
     },
 ]
 
-export {TodoStateToLabel}
+export {TodoStateToLabel, host}
