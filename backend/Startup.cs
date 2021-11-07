@@ -11,6 +11,7 @@ namespace temalabor_2021_todo_backend
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,16 +29,17 @@ namespace temalabor_2021_todo_backend
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddControllers();
-
             services.AddCors(opt =>
             {
                 opt.AddPolicy("policy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                    builder.WithOrigins("http://localhost:3000",
+                                        "http://192.168.0.52:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 });
             });
-
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,10 +49,14 @@ namespace temalabor_2021_todo_backend
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseEndpoints(e => e.MapControllers());
 
+            app.UseCors();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
