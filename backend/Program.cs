@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using temalabor_2021_todo_backend.Data;
+using temalabor_2021.Data;
 
-namespace temalabor_2021_todo_backend
+namespace temalabor_2021
 {
     public class Program
     {

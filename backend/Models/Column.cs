@@ -1,4 +1,4 @@
-﻿namespace temalabor_2021_todo_backend.Models
+﻿namespace temalabor_2021.Models
 {
     public class Column
     {

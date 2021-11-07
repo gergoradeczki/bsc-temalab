@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021_todo_backend.Models;
+using temalabor_2021.Models;
 
-namespace temalabor_2021_todo_backend.Data
+namespace temalabor_2021.Data
 {
     public class AppDbContext : DbContext
     {

@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using temalabor_2021_todo_backend.Data;
-using temalabor_2021_todo_backend.DAL;
+using temalabor_2021.Data;
+using temalabor_2021.DAL;
 
-namespace temalabor_2021_todo_backend
+namespace temalabor_2021
 {
     public class Startup
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using temalabor_2021_todo_backend.DAL;
-using temalabor_2021_todo_backend.Models;
+using temalabor_2021.DAL;
+using temalabor_2021.Models;
 
-namespace temalabor_2021_todo_backend.Controllers
+namespace temalabor_2021.Controllers
 {
     [EnableCors("policy")]
     [Route("api/todos")]

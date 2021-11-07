@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021_todo_backend.Data;
-using temalabor_2021_todo_backend.Models;
+using temalabor_2021.Data;
+using temalabor_2021.Models;
 
-namespace temalabor_2021_todo_backend.DAL
+namespace temalabor_2021.DAL
 {
     public class TodoRepository : ITodoRepository
     {

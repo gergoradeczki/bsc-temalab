@@ -1,4 +1,4 @@
-﻿namespace temalabor_2021_todo_backend.Data
+﻿namespace temalabor_2021.Data
 {
     public static class TestConn
     {

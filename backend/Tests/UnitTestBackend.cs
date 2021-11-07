@@ -1,5 +1,5 @@
 ﻿
-namespace temalabor_2021_todo_backend.Tests
+namespace temalabor_2021.Tests
 {
     public class UnitTestBackend
     {

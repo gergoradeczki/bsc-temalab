@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/temalabor-2021-todo-frontend.iml" filepath="$PROJECT_DIR$/.idea/temalabor-2021-todo-frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/temalabor-2021.iml" filepath="$PROJECT_DIR$/.idea/temalabor-2021.iml" />
     </modules>
   </component>
 </project>
