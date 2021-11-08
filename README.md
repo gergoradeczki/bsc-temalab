@@ -148,7 +148,7 @@ Oszlopokhoz:
         - 200: Vissza adja az összes oszlopot, beleágyazva a hozzájuk tartozó teendőket is
     - POST:
         - 201: A kapott névvel létre lett hozva az oszlop, vissza adja az id-val együtt
-        - 403: Nem sikerült az oszlop létrehozása
+        - 400: Nem sikerült az oszlop létrehozása
 - `/api/columns/{id}`
     - GET
         - 200: Megadott id alapján vissza adja a kért oszlopot, beágyzava a hozzá tartozó teendőkkel együtt.
@@ -164,7 +164,7 @@ Teendőkhöz:
         - 200: Vissza adja az összes teendőt, bele lesz ágyazva a hozzájuk tartozó oszlop
     - POST
         - 201: A kapott teendő létre lett hozva, vissza adja az id-ját és pozícióját
-        - 403: Nem sikerült a teendő létrehozása
+        - 400: Nem sikerült a teendő létrehozása
     - PUT
         - 200: Az kapott teendő adataival felül lett írva az adatbázisban lévő változat adatai.
         - 404: Nincs ilyen id-jú teendő
@@ -178,7 +178,7 @@ Teendőkhöz:
 - `/api/todos/swap`
     - PUT
         - 200: A kapott két darab id-jú teendők pozícióját megcserélte
-        - 409: Nem sikerült a csere
+        - 400: Nem sikerült a csere
 
 #### DTO-k
 
