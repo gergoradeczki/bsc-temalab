@@ -137,7 +137,7 @@ class Board extends React.Component<any, BoardStates> {
             fetch(host + ":5000/api/columns/")
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
+                    //console.log(data)
                     let columns = new Array<IColumn>()
                     let todos = new Array<ITodo>()
 

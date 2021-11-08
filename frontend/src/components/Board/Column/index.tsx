@@ -65,7 +65,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
     }
 
     handleTodoItemClick(action: number, position: number, newData?: ITodo) {
-        console.log("action: " + action + ", position: " + position)
+        //console.log("action: " + action + ", position: " + position)
 
         switch (action) {
             case 0: /* Moving Up */
