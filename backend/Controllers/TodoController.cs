@@ -29,10 +29,12 @@ namespace temalabor2021.Controllers
             return repo.Insert(todo) > 0 ? Created(new Uri(Request.Host + "/api/todos/" + todo.ID), todo) : BadRequest();
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] Todo todo)
+        [HttpPut("{id}")] // Path: api/todos/{id}
+        public IActionResult Update(int id, [FromBody] Todo todo)
         {
-            return repo.Update(todo) > 0 ? Ok() : NoContent();
+            var t = repo.FindById(id);
+            if(t == null) return NotFound();
+            return repo.Update(todo) > 0 ? Ok() : BadRequest();
         }
 
         [HttpGet("{id}")] // Path: api/todos/{id}

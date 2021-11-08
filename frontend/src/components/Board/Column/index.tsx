@@ -153,7 +153,7 @@ class Column extends React.Component<ColumnProps, ColumnStates> {
                 break
             case 3: /* Saving Changed Item */
                 if(newData !== undefined) {
-                    fetch(host + ":5000/api/todos", {
+                    fetch(host + ":5000/api/todos/" + newData.id, {
                         method: "PUT",
                         headers: {
                             'Content-type': 'application/json; charset=UTF-8'

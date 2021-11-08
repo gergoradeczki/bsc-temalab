@@ -70,7 +70,8 @@ namespace temalabor2021.DAL
         {
             if( todo == null) return 0;
             var toUpdate = db.Todos.SingleOrDefault(t => t.ID == todo.ID);
-            if(toUpdate != null)
+            if(toUpdate != null && 
+                db.Columns.Where(c => c.ID == todo.ColumnID).Any())
             {
                 toUpdate.ColumnID = todo.ColumnID;
                 toUpdate.Position = todo.Position;
@@ -78,8 +79,11 @@ namespace temalabor2021.DAL
                 toUpdate.Deadline = todo.Deadline;
                 toUpdate.Description = todo.Description;
                 toUpdate.State = todo.State;
+
+
+                return db.SaveChanges();
             }
-            return db.SaveChanges();
+            return 0;
         }
 
         public int SwapPosition(Todo t1, Todo t2)

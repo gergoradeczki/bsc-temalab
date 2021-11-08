@@ -165,15 +165,16 @@ Teendőkhöz:
     - POST
         - 201: A kapott teendő létre lett hozva, vissza adja az id-ját és pozícióját
         - 400: Nem sikerült a teendő létrehozása
-    - PUT
-        - 200: Az kapott teendő adataival felül lett írva az adatbázisban lévő változat adatai.
-        - 404: Nincs ilyen id-jú teendő
 - `/api/todos/{id}`
     - GET
         - 200: A kért id-jú teendőt vissza adja. Bele lesz ágyazva a hozzá tartozó oszlop
         - 404: Nincs ilyen id-jú teendő
     - DELETE
         - 204: A kért id-jú teendő törlésre került
+        - 404: Nincs ilyen id-jú teendő
+    - PUT
+        - 200: Az kapott teendő adataival felül lett írva az adatbázisban lévő változat adatai.
+        - 400: Nem sikerült a felülírás
         - 404: Nincs ilyen id-jú teendő
 - `/api/todos/swap`
     - PUT
