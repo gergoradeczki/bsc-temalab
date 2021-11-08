@@ -45,19 +45,25 @@ namespace temalabor_2021.DAL
 
         public int Insert(Todo todo)
         {
-            if(db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Any())
+            // ID ellenőrzés: null kell hogy legyen
+            // ColumnID: léteznie kell egy ilyen oszlopnak
+            // Position: az adott oszlopon belül nem szabad hogy ilyen létezzen ÉS max() + 1 -re kell állítani
+            // State: (int) [1,5] tartományban van
+
+            if(
+                (!db.Todos.Where(t => t.ID == todo.ID).Any()) &&
+                todo.ColumnID != null && db.Columns.Where(c => c.ID == todo.ColumnID).Any() &&
+                !db.Todos.Where(t => t.ColumnID == todo.ColumnID && t.Position == todo.Position).Any() &&
+                (int)todo.State >= (int)TodoState.PendingState && (int)todo.State <= (int)TodoState.PostponedState
+                )
             {
-                int maxPos = db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Max();
-                todo.Position = maxPos + 1;
-            } else
-            {
-                todo.Position = 0;
+                if (db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Any())
+                    todo.Position = 1 + db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Max();
+                else
+                    todo.Position = 0;
+                db.Todos.Add(todo);
             }
-            
-
-            db.Todos.Add(todo);
             return db.SaveChanges();
-
         }
 
         public int Update(Todo todo)
@@ -77,21 +83,14 @@ namespace temalabor_2021.DAL
 
         public int SwapPosition(Todo t1, Todo t2)
         {
-            int tempPos = t1.Position;
-            t1.Position = t2.Position;
-            t2.Position = tempPos;
+            if(t1.ColumnID == t2.ColumnID)
+            {
+                int tempPos = t1.Position;
+                t1.Position = t2.Position;
+                t2.Position = tempPos;
+            }
 
             return db.SaveChanges();
-        }
-
-        public void MoveUp(Todo todo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MoveDown(Todo todo)
-        {
-            throw new NotImplementedException();
         }
 
         public static TodoDTO GetTodoDTO(Todo todo)
