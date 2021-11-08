@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021.Models;
+using temalabor2021.Models;
 
-namespace temalabor_2021.Data
+namespace temalabor2021.Data
 {
     public class AppDbContext : DbContext
     {
@@ -14,6 +14,7 @@ namespace temalabor_2021.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            if (modelBuilder == null) return;
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Column>().ToTable("Column");
             modelBuilder.Entity<Todo>().ToTable("Todo");

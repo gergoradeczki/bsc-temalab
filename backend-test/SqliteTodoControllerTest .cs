@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using temalabor_2021.Controllers;
-using temalabor_2021.DAL;
-using temalabor_2021.Data;
+using temalabor2021.Controllers;
+using temalabor2021.DAL;
+using temalabor2021.Data;
 using Xunit;
 
-namespace temalabor_2021.Tests
+namespace temalabor2021.Tests
 {
     public class SqliteTodoControllerTest : ControllerTest
     {
@@ -38,7 +38,7 @@ namespace temalabor_2021.Tests
             var item2 = repo.FindById(99);
 
             Assert.NotNull(item1);
-            Assert.Equal(1, item1.ID);
+            Assert.Equal(1, item1?.ID);
             Assert.Null(item2);
         }
 

@@ -1,11 +1,11 @@
-﻿using temalabor_2021.Models;
+﻿using temalabor2021.Models;
 
-namespace temalabor_2021.DAL
+namespace temalabor2021.DAL
 {
     public interface ITodoRepository
     {
         Todo? FindById(int id);
-        ICollection<TodoDetailsDTO> GetAll();
+        ICollection<TodoDetailsDTO?> GetAll();
         int Update(Todo todo);
         int Insert(Todo todo);
         bool Delete(int id);

@@ -1,4 +1,4 @@
-﻿namespace temalabor_2021.Data
+﻿namespace temalabor2021.Data
 {
     public static class TestConn
     {

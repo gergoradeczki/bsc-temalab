@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using temalabor_2021.DAL;
-using temalabor_2021.Models;
+using temalabor2021.DAL;
+using temalabor2021.Models;
 
-namespace temalabor_2021.Controllers
+namespace temalabor2021.Controllers
 {
     [EnableCors("policy")]
     [Route("api/todos")]
@@ -17,7 +17,7 @@ namespace temalabor_2021.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TodoDetailsDTO> GetAll()
+        public IEnumerable<TodoDetailsDTO?> GetAll()
         {
             return repo.GetAll();
         }
@@ -25,7 +25,8 @@ namespace temalabor_2021.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Todo todo)
         {
-            return repo.Insert(todo) > 0 ? Created("/api/todos/" + todo.ID, todo) : Forbid();
+            if (todo == null) return BadRequest();
+            return repo.Insert(todo) > 0 ? Created(new Uri(Request.Host + "/api/todos/" + todo.ID), todo) : BadRequest();
         }
 
         [HttpPut]
@@ -50,22 +51,19 @@ namespace temalabor_2021.Controllers
         }
 
         [HttpPut("swap")] // Path: api/todos/swap
-        public IActionResult SwapTodos([FromBody] SwapClass sc)
+        public IActionResult SwapTodos([FromBody] SwapDTO sc)
         {
-            var t1 = repo.FindById(sc.a);
-            var t2 = repo.FindById(sc.b);
+            if(sc == null) return BadRequest();
+            var t1 = repo.FindById(sc.A);
+            var t2 = repo.FindById(sc.B);
 
             if(t1 != null && t2 != null)
             {
-                return repo.SwapPosition(t1, t2) > 0 ? Ok() : Conflict();
+                return repo.SwapPosition(t1, t2) > 0 ? Ok() : BadRequest();
             }
-            return Conflict();
+            return BadRequest();
         }
 
-        public class SwapClass
-        {
-            public int a { get; set; }
-            public int b { get; set; }
-        }
+        
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using temalabor_2021.DAL;
-using temalabor_2021.Models;
+using temalabor2021.DAL;
+using temalabor2021.Models;
 
-namespace temalabor_2021.Controllers
+namespace temalabor2021.Controllers
 {
     [EnableCors("policy")]
     [Route("api/columns")]
@@ -17,7 +17,7 @@ namespace temalabor_2021.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ColumnDetailsDTO> GetAll()
+        public IEnumerable<ColumnDetailsDTO?> GetAll()
         {
             return repo.GetAll();
         }
@@ -25,7 +25,8 @@ namespace temalabor_2021.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Column column)
         {
-            return repo.Insert(column) > 0 ? Created("/api/columns/" + column.ID, column) : Forbid();
+            if (column == null) return BadRequest();
+            return repo.Insert(column) > 0 ? Created(new Uri(Request.Host + "/api/columns/" + column.ID), column) : BadRequest();
         }
 
         [HttpGet("{id}")] // Path: api/columns/{id}

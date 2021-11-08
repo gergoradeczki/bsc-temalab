@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using temalabor_2021.Data;
-using temalabor_2021.Models;
+using temalabor2021.Data;
+using temalabor2021.Models;
 
-namespace temalabor_2021.Tests
+namespace temalabor2021.Tests
 {
     public class ControllerTest
     {

@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using temalabor_2021.Data;
+using temalabor2021.Data;
 
-namespace temalabor_2021
+namespace temalabor2021
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -29,10 +28,9 @@ namespace temalabor_2021
                     var context = services.GetRequiredService<AppDbContext>();
                     DbInitializer.Initialize(context);
                 }
-                catch (Exception ex)
+                catch (InvalidOperationException ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

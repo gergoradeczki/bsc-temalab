@@ -4,10 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using temalabor_2021.Data;
-using temalabor_2021.DAL;
+using temalabor2021.Data;
+using temalabor2021.DAL;
 
-namespace temalabor_2021
+namespace temalabor2021
 {
     public class Startup
     {
@@ -19,7 +19,7 @@ namespace temalabor_2021
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IColumnRepository, ColumnRepository>();
             services.AddScoped<ITodoRepository, TodoRepository>();
@@ -41,7 +41,7 @@ namespace temalabor_2021
             services.AddControllers();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

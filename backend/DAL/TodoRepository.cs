@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021.Data;
-using temalabor_2021.Models;
+using temalabor2021.Data;
+using temalabor2021.Models;
 
-namespace temalabor_2021.DAL
+namespace temalabor2021.DAL
 {
     public class TodoRepository : ITodoRepository
     {
@@ -35,7 +35,7 @@ namespace temalabor_2021.DAL
             return db.Todos.Include(t => t.Column).SingleOrDefault(t => t.ID == id);
         }
 
-        public ICollection<TodoDetailsDTO> GetAll()
+        public ICollection<TodoDetailsDTO?> GetAll()
         {
             return db.Todos
                 .Include(t => t.Column)
@@ -45,6 +45,7 @@ namespace temalabor_2021.DAL
 
         public int Insert(Todo todo)
         {
+            if(todo == null) return 0;
             // ID ellenőrzés: null kell hogy legyen
             // ColumnID: léteznie kell egy ilyen oszlopnak
             // Position: az adott oszlopon belül nem szabad hogy ilyen létezzen ÉS max() + 1 -re kell állítani
@@ -52,9 +53,8 @@ namespace temalabor_2021.DAL
 
             if(
                 (!db.Todos.Where(t => t.ID == todo.ID).Any()) &&
-                todo.ColumnID != null && db.Columns.Where(c => c.ID == todo.ColumnID).Any() &&
-                !db.Todos.Where(t => t.ColumnID == todo.ColumnID && t.Position == todo.Position).Any() &&
-                (int)todo.State >= (int)TodoState.PendingState && (int)todo.State <= (int)TodoState.PostponedState
+                db.Columns.Where(c => c.ID == todo.ColumnID).Any() &&
+                !db.Todos.Where(t => t.ColumnID == todo.ColumnID && t.Position == todo.Position).Any()
                 )
             {
                 if (db.Todos.Where(t => t.ColumnID == todo.ColumnID).Select(t => t.Position).Any())
@@ -68,6 +68,7 @@ namespace temalabor_2021.DAL
 
         public int Update(Todo todo)
         {
+            if( todo == null) return 0;
             var toUpdate = db.Todos.SingleOrDefault(t => t.ID == todo.ID);
             if(toUpdate != null)
             {
@@ -83,6 +84,7 @@ namespace temalabor_2021.DAL
 
         public int SwapPosition(Todo t1, Todo t2)
         {
+            if(t1 == null || t2 == null) return 0;
             if(t1.ColumnID == t2.ColumnID)
             {
                 int tempPos = t1.Position;
@@ -93,8 +95,9 @@ namespace temalabor_2021.DAL
             return db.SaveChanges();
         }
 
-        public static TodoDTO GetTodoDTO(Todo todo)
+        public static TodoDTO? GetTodoDTO(Todo todo)
         {
+            if(todo == null) return null;
             return new TodoDTO()
             {
                 ID = todo.ID,
@@ -106,8 +109,10 @@ namespace temalabor_2021.DAL
             };
         }
 
-        public static TodoDetailsDTO GetTodoDetailsDTO(Todo todo)
+        public static TodoDetailsDTO? GetTodoDetailsDTO(Todo todo)
         {
+            if(todo == null) return null;
+            var columnDTO = ColumnRepository.GetColumnDTO(todo.Column);
             return new TodoDetailsDTO()
             {
                 ID = todo.ID,
@@ -116,7 +121,7 @@ namespace temalabor_2021.DAL
                 Deadline = todo.Deadline,
                 Description = todo.Description,
                 State = todo.State,
-                Column = ColumnRepository.GetColumnDTO(todo.Column)
+                Column = columnDTO ?? new ColumnDTO()
             };
         }
     }

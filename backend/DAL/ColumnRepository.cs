@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using temalabor_2021.Data;
-using temalabor_2021.Models;
+using temalabor2021.Data;
+using temalabor2021.Models;
 
-namespace temalabor_2021.DAL
+namespace temalabor2021.DAL
 {
     public class ColumnRepository : IColumnRepository
     {
@@ -26,8 +26,9 @@ namespace temalabor_2021.DAL
             return db.Columns.Include(c => c.Todos).SingleOrDefault(c => c.ID == id);
         }
 
-        public ICollection<ColumnDetailsDTO> GetAll()
+        public ICollection<ColumnDetailsDTO?> GetAll()
         {
+
             return db.Columns
                 .Include(c => c.Todos)
                 .Select(c => GetColumnDetailsDTO(c))
@@ -40,8 +41,9 @@ namespace temalabor_2021.DAL
             return db.SaveChanges();
         }
 
-        public static ColumnDTO GetColumnDTO(Column column)
+        public static ColumnDTO? GetColumnDTO(Column column)
         {
+            if (column == null) return null;
             return new ColumnDTO()
             {
                 ID = column.ID,
@@ -49,13 +51,15 @@ namespace temalabor_2021.DAL
             };
         }
 
-        public static ColumnDetailsDTO GetColumnDetailsDTO(Column column)
+        public static ColumnDetailsDTO? GetColumnDetailsDTO(Column column)
         {
+            if(column == null) return null;
+            if(column.Todos == null) return null;
             return new ColumnDetailsDTO()
             {
                 ID = column.ID,
                 Name = column.Name,
-                Todos = column.Todos?.Select(t => TodoRepository.GetTodoDTO(t))
+                Todos = column.Todos.Select(t => TodoRepository.GetTodoDTO(t))
             };
         }
     }

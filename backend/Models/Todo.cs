@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace temalabor_2021.Models
+namespace temalabor2021.Models
 {
     public enum TodoState
     {
