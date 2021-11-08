@@ -92,7 +92,7 @@ class Todo extends React.Component<TodoProps, TodoStates> {
                             <Typography variant="h5" component="div" sx={{color: this.getStateColor(this.state.state)}}>{this.state.name}</Typography>
                             <Typography variant="caption">{this.state.deadline.toLocaleString()}</Typography>
                             <Typography variant="body2" color="text.secondary">{this.state.description}</Typography>
-                            {/*<Typography variant="caption">id: {this.props.id}, c_id: {this.props.column_id}, pos: {this.props.position}, state: {this.props.state.toString()}</Typography>*/}
+                            <Typography variant="caption">id: {this.props.id}, c_id: {this.props.column_id}, pos: {this.props.position}, state: {this.props.state.toString()}</Typography>
                         </>
                     }
                     {this.state.edit &&
