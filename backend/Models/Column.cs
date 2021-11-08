@@ -1,4 +1,6 @@
-﻿namespace temalabor2021.Models
+﻿using System.Collections.Generic;
+
+namespace temalabor2021.Models
 {
     public class Column
     {

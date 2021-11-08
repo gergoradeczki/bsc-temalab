@@ -179,12 +179,12 @@ namespace temalabor2021.Tests
 
             var repo = new TodoRepository(context);
 
-            var t1 = repo.FindById(1);
+            var t1 = repo.FindById(2);
             if (t1 == null)
                 return;
             int pos1 = t1.Position;
 
-            var t2 = repo.FindById(2);
+            var t2 = repo.FindById(3);
             if (t2 == null)
                 return;
             int pos2 = t2.Position;

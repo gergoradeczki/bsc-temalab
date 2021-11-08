@@ -1,4 +1,5 @@
-﻿using temalabor2021.Models;
+﻿using System.Collections.Generic;
+using temalabor2021.Models;
 
 namespace temalabor2021.DAL
 {
