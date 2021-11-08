@@ -194,3 +194,11 @@ Ezzel a két plusz osztállyal megszűnik a végtelen include-olás.
 #### CORS
 
 A program a `localhost:3000` címről érkező bármilyen kérést fogadja.
+
+#### Tesztek
+
+A Solution fájlnak a másik projektjében található két teszt fájl.
+
+Minden egyes teszteset kezdetekor a teszteléshez használt adatbázis törlésre kerül és helyére az előre megadott adatokkal egy új adatbázis jön létre.
+
+A `SqliteTodoRepositoryTest.cs` fájlban Sqlite adatbázist használva végig tesztelem a `TodoRepository.cs` függvényeit, hogy azok helyesen működnek-e.

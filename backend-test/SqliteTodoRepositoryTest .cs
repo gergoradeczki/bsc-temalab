@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using temalabor2021.Controllers;
 using temalabor2021.DAL;
 using temalabor2021.Data;
 using Xunit;
 
 namespace temalabor2021.Tests
 {
-    public class SqliteTodoControllerTest : ControllerTest
+    public class SqliteTodoRepositoryTest : ControllerTest
     {
-        public SqliteTodoControllerTest() : base(new DbContextOptionsBuilder<AppDbContext>()
+        public SqliteTodoRepositoryTest() : base(new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlite("Filename=Test.db")
             .Options)
         {
