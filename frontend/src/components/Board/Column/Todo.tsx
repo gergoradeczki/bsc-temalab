@@ -131,7 +131,7 @@ class Todo extends React.Component<TodoProps, TodoStates> {
                             <TextField
                                 id="todo-state"
                                 select
-                                label="Select"
+                                label="Állapot"
                                 value={this.state.state}
                                 onChange={(e) => this.setState({state: parseInt(e.target.value)})}
                             >
