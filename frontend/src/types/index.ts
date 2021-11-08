@@ -1,3 +1,5 @@
+// noinspection HttpUrlsUsage
+
 export enum TodoState {
     PendingState,
     ProgressState,
